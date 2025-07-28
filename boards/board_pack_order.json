@@ -1,0 +1,8 @@
+{
+	"board_pack_order": [
+		"test",
+		"release",
+		"merged",
+		"tutorial1"
+	]
+}

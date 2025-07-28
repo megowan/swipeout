@@ -1,0 +1,87 @@
+Level progression.txt
+
+Progression
+* One ball, one goal, closed board 5x5, no failure
+* Failure possible
+* Pit
+* Edge of the world
+* Gum
+* Gum and edge
+* Neutral
+* Gum and Neutral
+* Gum, Edge and Neutral
+* Vat
+* Neutral and Vat
+* Edge and Vat
+* Edge, Pit and Vat
+* Gum, Neutral, Vat
+* Edge, Pit, Gum, Vat
+* Edge, Pit, Gum, Neutral, Vat
+* Enemy
+* Neutral, Enemy
+* Enemy, Edge
+* Enemy, Pit
+* Enemy, Edge, Pit
+* Enemy, Gum
+* Enemy, Edge, Gum
+* Enemy, Pit, Gum
+* Enemy, Edge, Pit, Gum
+* Enemy, Vat
+* Enemy, Edge, Vat
+* Enemy, Pit, Vat
+* Enemy, Neutral, pit, vat
+* Enemy, Neutral, pit, vat, gum
+* Multiball
+* Multiball, Gum
+* Multiball, Neutral
+* Multiball, Pit
+* Multiball, Edge
+* Multiball, vat
+* Multiball, Enemy, Gum
+* Multiball, Enemy, Pit
+* Multiball, Neutral, Gum
+* Multiball, Neutral, Pit
+* Multiball, Neutral, Vat
+* Multiball, Enemy, Vat
+* Multiball, Enemy, Neutral, Gum
+* Multiball, Enemy, Neutral, Vat
+* Multiball, MultiExit
+* Sparky
+* Sparky, Enemy
+* Sparky, Neutral
+* Sparky, Enemy, Neutral
+* Sparky, Gum
+* Sparky, Enemy, Gum
+* Sparky, Neutral, Gum
+* Sparky, Pit
+* Sparky, Vat
+* Sparky, Enemy, Pit
+* SParky, Neutral, Pit
+* Sparky, Enemy, Vat
+* Sparky, Neutral, Vat
+* Rock
+* Rock, Sparky
+* Hroller, VRoller
+* Hroller, Vroller, Reginald
+* Sparky, Hroller, Vroller
+* Hroller, Pit
+* Vroller, Pit
+* Hroller, VRoller, Vat
+* Sparky, Hroller, Reginald, Vat
+* Enemy Rollers
+* ENemy Rollers, Sparky
+* Enemy Rollers, Pit
+* Enemy ROllers, vat
+* Enemy Rollers, Gum
+* Enemy ROllers, Neutral
+* ROllers and Enemy Rollers
+* Neutral and Enemy ROllers
+* Waypoint
+* Waypoint, Enemy
+* Waypoint, pit
+* Waypoint gum
+* Waypoint vat
+* Waypoint pit vat
+* Waypoint pit vat gum
+* Waypoint pit enemy
+* Waypoint vat enemy

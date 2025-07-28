@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnph4a038e7w0"]
+
+[ext_resource type="Texture2D" uid="uid://byometmkcylw6" path="res://art/props/waypoints.png" id="1_ftecf"]
+[ext_resource type="Script" path="res://scripts/props/waypoint_prop.gd" id="2_83fv3"]
+[ext_resource type="AudioStream" uid="uid://cipfiw85286g1" path="res://audio/waypoint.ogg" id="3_t87ce"]
+
+[node name="waypoint_prop" type="Sprite2D"]
+z_index = 2
+texture = ExtResource("1_ftecf")
+offset = Vector2(22, 22)
+hframes = 2
+frame = 1
+script = ExtResource("2_83fv3")
+
+[node name="audio_waypoint" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_t87ce")

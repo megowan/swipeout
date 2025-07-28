@@ -1,0 +1,240 @@
+swipeout_build_notes.txt
+
+5/25
+https://github.com/godotengine/godot-git-plugin/wiki/Git-plugin-v3
+
+
+5/26
+* Found and added the floor shadows, which entailed properly setting the draw order for all art in the game
+* Finished the "Before-Move" state
+* Fixed bug where hroller and vroller were not being instantiated
+* Built the spark animations as a scene with script, to attach as a child to an inhabitant
+
+5/28
+* Added sparks to Sparky, but don't sync them to their animations yet
+* Fixed bug where timers were being instantiated and deleted all the time for timing the animations.
+* Brought in all the themes and added the background image
+* Figured out the model view controller scheme for board data
+
+5/29
+* Pulled the "view" into its own scene/class that knows nothing about file i/o or game logic
+* Imported all of Israel's themes and hot-swapped the skins
+* Updated the level loader from a system that loads a single level to a system that loads a collection of levels
+* https://gitlab.com/fourbeans/swipeout/-/tree/main and invited Israel and Jupiter
+
+5/30
+Use the tileset attached to the board description in the JSON file.
+Stubbed support for a "level pack" system where boards are stored in groups and a master file contains the ordered list of packs
+
+6/6
+Finished the MVC split. File management is in one place. In-game logic is in another. Rendering is in a third, and control of all elements is in a BoardController
+The BoardController caches all resources needed to create every board, and can use them to quickly instantiate what it needs to make a new level.
+First piece of metagame logic is in; the flow from initialization to loading the first board.
+Fixed copypaste where inhabitant states were being used for game state arguments
+
+6/14
+Loads player profile or makes a new one on start, during initialization
+Propagates profile settings to HUD
+Saves profile after every change
+Stubbed logic for moving from board to board now that more than one board exists in memory
+
+6/17
+When changing boards, enable and disable the 'next board' and 'previous board' buttons appropriately
+Added per-tileset acceleration and max speed, based on tiles per second
+Renamed from settings to profile
+Added per-tileset lerp functionality
+
+6/17
+* Hooked up fullscreen toggle. Hooked up repositioning and rescaling of the background image and the tilemap on toggle.
+* Hooked up sfx toggle
+* Hooked up music toggle (but no music plays yet)
+* Built the next board and previous board logic, with theme changes, loading, but not the animations
+* Stubbed the slide in and out of the boards, and then transition from 'loading' to 'playing the game' state
+* Stubbed the logic for the cross-fade when changing themes from board to board. For now it's instant.
+* Deletes the old board resources once the new board is front and center
+
+6/18
+
+* Started embracing custom signals as a means of communication among entities. Going to refactor around this a little, as it removes dependencies.
+* The GUI and the PageUp/PageDown keys now work to cycle through all available maps and themes. There's a bug where it instantiates two boards instead of one now.
+* Proper management of game states from initialization to transitioning boards on/off to awaiting player input and handling moves and back to waiting.
+* Still no winning or losing, though.
+* Trimmed out some debug messages that I no longer needed
+
+6/19
+* Fixed the double load bug. I had a line of the temporary level load code still floating around from before the real level transitions.
+
+6/20
+* cross fading of background
+* Exposed transition speed as an inspector variable
+* Removed everyone having references to everything else in favor of emitting signals and selecting which items receive them. Means that the emitters don't have to worry about downstream dependencies.
+* Only handle swipe commands when the game is idle
+* Inhabitants move until they bump into something or pass over something
+* Slyder can find the exit and enter the exit state.
+* I accidentally used the vector for changing cells as the vector for animation blending. Split those out and now the balls roll and the roll animations play.
+* Character rolls until it bumps into a wall, then plays animation and waits for everyone else to finish
+* Fixed the ball 'bump' animation transition to wait until the animation finished before going back to idle state
+
+6/21
+* made a level with ball and neutral moving together
+* Can move indefinitely and collide with walls (but not with other inhabitants)
+* can handle moving into a pit or off the map
+* properly enter 'done' state to wait for everyone else
+* when everyone is done moving, return everyone to idle and await the next move
+
+6/22
+More refactoring for cleaner code. 
+BoardController.Build_board() computes width from all rows instead of just first
+Cleaned up inhabitant state machine to only create strings once
+Moved inhabitant debug info into the superclass so that I can easily turn it on and off for everything at once
+Learned how to connect signals in code, which eliminated the "only within the same scene" constraint of the IDE.
+Switched board transition animations to use signals instead of polling
+Switched HUD buttons to use signals instead of having references to other objects
+'R' hotkey and the restart button hooked up
+
+6/23
+* Rewrote the transition out to delete itself after getting the signal that the tween is done.
+* Previous board and next board as signals (from buttons or inputs)
+* Restart as signal
+* Instant transition out for old board on restart
+* moved diagnostics to base gamestate to turn on and off everywhere at once, like inhabitant states
+* fixed some animation blends and missing sfx
+* added a "game over" signal
+
+6/24
+* Changed Profile to save no more than once per frame if a value has changed
+* Renamed gameboard to logicalboard
+* changed visualboard to visual_board
+* Updated animations to allow transitioning from looking directly to bumping without rolling first
+* Characters properly wait for a cell to vacate before moving
+* finished benign collisions
+* finished 'stuck on gum'
+* fixed ball_vatfall anim to use a 15 fps spritesheet
+* Fixed animation state machine on various characters to flow from 'bump' and 'stuck' to the 'after' state properly.
+* Fixed rock, who was missing the state transition from 'idle' to 'before'
+* Added more test case boards
+
+References, pointers are tricky things in Godot.
+Loads failed with "corruption" because my state machine nodes have references to each other, and that's detected in preloading as circular references.
+You can have a reference to something and if it gets freed, that reference will be replaced with a null without your knowledge
+
+6/25
+Added audio to hroller, vroller, enemy hroller and vroller enemy
+Escaped balls are removed from the board, and the board is considered complete when the last ball has escaped.
+Fixed Audio toggle to not be flipped from icons
+Completing a board advances to the next board and updates the player profile on the highest level reached if needed.
+Fixed a bug where characters stuck to gum, like, forever
+When all levels are complete, next and previous wrap around
+added test board for gum
+
+6/26
+* Added looping soundtrack that advances when you finish a level
+* Added about 30 fonts to the project, to put the board name at the bottom of the screen
+* Characters die in pits or falling off the edge of the board
+* Fixed ball to transition immediately out of ambient. It's not great.
+* Fixed bug: triggering a transition during a transition
+* death removes the character. If it's a character needed to win, then the board is failed and the only options are to restart or change boards
+* Fixed all characters to have discrete animations instead of attempting to blend (which you can't do with sprites anyhow)
+* Made ambient sounds the children of the ambient state node, and the node auto discovers them
+* Fixed bug where substate information (about what state to change to next) was not being cleared before entering a given state again, which broke moves after a restart
+* Finished implementing waypoints (and added a sound effect when the last waypoint is tripped)
+* Added a test level for waypoints
+* Allowed restart, next level and previous level mid-move
+
+6/27
+* Death by vat
+* Vat test level tests every character rolling in
+* Make bump sounds the children of the bump state node, and the node auto discovers them
+* Fixed bug: character deaths meant the turn didn't finish because they weren't reporting their turn as done
+* Board names are displayed
+* Death by bumping
+
+6/28
+Wrote a script to port the slyder2 boards to Swipeout
+Got 132 maps
+
+6/29
+[x] Generated swipeout asset list
+[x] death by zap
+[x] added sound for losing the board
+
+7/1
+* Fixed bug: not handling the case of waiting for the character ahead of us to finish their move.
+* Refactored to remove animation tree. No more fighting between state machines. Serious simplification.
+The issue with animationtree was that it could not handle more than one transition during a single frame. So the last
+inhabitant to enter the 'ready' state would always miss out on the next transition back to 'idle'
+* Removing the animation tree will unlock some more flexibility around state changes since the inhabitant states are no
+longer beholden to the animation transitions.
+
+7/2
+Fixed bug: bumps were trumping contact with props
+Fixed bug: vats kept a smart pointer to who they swallowed, and deleting that inhabitant set the pointer to null (emptying the vat)
+Fixed bug: reset icon was not going away after a restart
+Fixed bug: not all paths updated the board name on the HUD
+Fixed BUG: enemy bumps are taking priority over vat
+Fixed bug: when one ball escapes from a multiball level, was not being removed from the list of moving pieces
+Fixed bug: sparky kills everything that touched it instead of just the first thing
+Fixed bug: bumping took precedence over gum
+Fixed bug: ending a move took precedence over finishing a level
+
+7/3
+* Refactored to eliminate 'circular dependencies'. Thought that would address a Godot quirk. It did not.
+* Refactored inhabitant state machine to dedupe some animation code
+* Fixed 'escape' sound to follow the same auto-load protocol as all other inhabitant sounds
+* BUG: Multiple slyders. one slyder escapes, still in moving state.
+* fixed bug: smashing the keyboard could trigger swipe in one direction and then movement in another
+* fixed a board that had a goal under a neutral
+* Deduped the level load code in boardController
+* Inhabitants no longer concern themselves with visuals. The board theme handles it.
+* bug: if sparky kills something and another dude is waiting behind them, they should move after sparky dies
+* Collisions with bomb now instantly zap both parties
+* More refinement to the new inhabitant positioning (separation of concerns)
+
+7/4
+
+* Merged all viable classic levels into one big file
+* added spark effect to zapped victims
+* Make subclass OneAnimationState to dedupe the animation code. I want to switch to a component model, but I'll start with subclassing
+* Inhabitants get max speed and acceleration from the visual board
+* Turned inhabitant states to more pure components, with (almost) no knowledge of the inhabitant or the board.
+* added numbers to the board names
+* Add got_zapped handlers to all inhabitants
+* Update inhabitant states to talk to the parent (inhabitant) for things instead of the board or controller etc.
+  * after_state, emit a signal when the inhabitant finished a turn, which the parent captures and passes on to the logical board
+  * before_state, emit a signal when the inhabitant starts a turn, which the parent captures and passes on to the logical board
+* Moved the keyboard handler out of the general frame processor and into the much narrowed input event handler
+* Added Mouse swipe based control
+* added some classic boards from clickmazes.com
+
+7/5
+* Fixed map importer to also bring over the map's chosen tileset
+* Refactored to get board building out of the board controller
+* Ball can now immediately go from move to bumpdeath
+* Fixed BUG "Bump Death" test level. If ball didn't move and unger hits, then the game goes to Waiting instead of failed
+* Pressing any key closes the popup
+* imported an arrow asset to display as feedback when entering a swipe via mouse or keyboard
+* Added a minimum threshold length to a mouse swipe
+
+7/6
+* Trying to fix circular dependency by using a raw state machine instead of a scene of one node
+
+7/7
+* Refactored to follow the godot gdscript style guidelines
+* added 'current level' to player profile
+* Remove 'level select' game state and button
+* Learned how to build windows executables, set up the windows minimal template
+* Removed all unused fonts and other resources
+
+
+7/11
+* removed zap scene from logical board
+* Switched all logic around finishing a board transitioning in to communicate via signal
+* Added unit testing framework!
+* controller emits signal about what board number it's on
+* Controller updates the HUD through a signal
+* Allowed stuck to be interruptible for zap, bumpdeath
+* Began the trek to statically type all variables and functions for a perf boost
+
+7/12
+* Finished statically typing the entire game
+* Fixed a misnamed idle animation on the enemy

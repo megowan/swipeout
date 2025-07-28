@@ -1,0 +1,101 @@
+[gd_scene load_steps=10 format=3 uid="uid://cus25mfb6v7u1"]
+
+[ext_resource type="Script" path="res://scripts/board/board_view.gd" id="1_m2pyy"]
+[ext_resource type="Texture2D" uid="uid://c6r3qv56o02e" path="res://art/tileset/floorshadows.png" id="2_2dgnt"]
+[ext_resource type="Texture2D" uid="uid://c0h5n2kr42d5e" path="res://art/tileset/square/walls.png" id="3_75owq"]
+[ext_resource type="Texture2D" uid="uid://bwxgqpxdrma1a" path="res://art/tileset/square/floor.png" id="4_p6ek1"]
+[ext_resource type="Texture2D" uid="uid://b8sf1g1bn25rm" path="res://art/tileset/square/bg.png" id="5_co6dp"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iflsm"]
+resource_name = "FloorShadows"
+texture = ExtResource("2_2dgnt")
+texture_region_size = Vector2i(40, 40)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(-12, -12)
+0:0/0/modulate = Color(1, 1, 1, 0.392157)
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(-12, -12)
+1:0/0/modulate = Color(1, 1, 1, 0.392157)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3yjle"]
+texture = ExtResource("3_75owq")
+texture_region_size = Vector2i(40, 40)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(20, 20)
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(20, 20)
+1:0/0/custom_data_0 = "d"
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(20, 20)
+2:0/0/custom_data_0 = "l"
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(20, 20)
+3:0/0/custom_data_0 = "u"
+4:0/0 = 0
+4:0/0/texture_origin = Vector2i(20, 20)
+4:0/0/custom_data_0 = "r"
+5:0/0 = 0
+5:0/0/texture_origin = Vector2i(20, 20)
+5:0/0/custom_data_0 = "ud"
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(20, 20)
+0:1/0/custom_data_0 = "dr"
+1:1/0 = 0
+1:1/0/texture_origin = Vector2i(20, 20)
+1:1/0/custom_data_0 = "lr"
+2:1/0 = 0
+2:1/0/texture_origin = Vector2i(20, 20)
+2:1/0/custom_data_0 = "dl"
+3:1/0 = 0
+3:1/0/texture_origin = Vector2i(20, 20)
+3:1/0/custom_data_0 = "ul"
+4:1/0 = 0
+4:1/0/texture_origin = Vector2i(20, 20)
+4:1/0/custom_data_0 = "ur"
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(20, 20)
+0:2/0/custom_data_0 = "dlr"
+1:2/0 = 0
+1:2/0/texture_origin = Vector2i(20, 20)
+1:2/0/custom_data_0 = "udl"
+2:2/0 = 0
+2:2/0/texture_origin = Vector2i(20, 20)
+2:2/0/custom_data_0 = "ulr"
+3:2/0 = 0
+3:2/0/texture_origin = Vector2i(20, 20)
+3:2/0/custom_data_0 = "udr"
+4:2/0 = 0
+4:2/0/texture_origin = Vector2i(20, 20)
+4:2/0/custom_data_0 = "udlr"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rxt1y"]
+resource_name = "Floor"
+texture = ExtResource("4_p6ek1")
+texture_region_size = Vector2i(40, 40)
+0:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_2pg0g"]
+tile_size = Vector2i(40, 40)
+custom_data_layer_0/name = "wall_data"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_iflsm")
+sources/1 = SubResource("TileSetAtlasSource_3yjle")
+sources/2 = SubResource("TileSetAtlasSource_rxt1y")
+
+[node name="BoardViewSquare" type="Node2D"]
+script = ExtResource("1_m2pyy")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_2pg0g")
+format = 2
+layer_0/z_index = 1
+layer_1/z_index = 2
+layer_1/tile_data = PackedInt32Array()
+layer_2/z_index = 3
+layer_2/tile_data = PackedInt32Array()
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(512, 300)
+scale = Vector2(1.6, 1.6)
+texture = ExtResource("5_co6dp")

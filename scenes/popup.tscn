@@ -1,0 +1,205 @@
+[gd_scene load_steps=14 format=3 uid="uid://c8bl7g0eny4i1"]
+
+[ext_resource type="Script" path="res://scripts/popup_menu.gd" id="1_8fvla"]
+[ext_resource type="Texture2D" uid="uid://wuk20ywjbi8y" path="res://art/ui/gear.png" id="1_gvra1"]
+[ext_resource type="Texture2D" uid="uid://c5v45pk4yei2v" path="res://art/ui/return.png" id="3_2rvlw"]
+[ext_resource type="Texture2D" uid="uid://mnc7sq4x20wy" path="res://art/ui/left.png" id="4_q8cus"]
+[ext_resource type="Texture2D" uid="uid://cwyohpf613biy" path="res://art/ui/right.png" id="5_7ljyn"]
+[ext_resource type="Texture2D" uid="uid://bmn6oj1nvyso5" path="res://art/ui/audioOn.png" id="6_yhrvr"]
+[ext_resource type="Texture2D" uid="uid://80vvpqh104n3" path="res://art/ui/audioOff.png" id="7_7vpjg"]
+[ext_resource type="Texture2D" uid="uid://crabf8neodho4" path="res://art/ui/musicOff.png" id="8_28fv2"]
+[ext_resource type="Texture2D" uid="uid://bbafufhx8hh1r" path="res://art/ui/musicOn.png" id="9_0cvjj"]
+[ext_resource type="Texture2D" uid="uid://bv83blf4a2gbn" path="res://art/ui/larger.png" id="10_pifpx"]
+[ext_resource type="Texture2D" uid="uid://bacwnrqcly0mb" path="res://art/ui/smaller.png" id="11_sgg41"]
+[ext_resource type="Texture2D" uid="uid://dwse0sqknilmi" path="res://art/ui/exit.png" id="12_mxoal"]
+[ext_resource type="FontFile" uid="uid://cuce3s8div2es" path="res://fonts/Salsa-Regular.ttf" id="14_h5i6g"]
+
+[node name="Popup" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_8fvla")
+metadata/_edit_use_anchors_ = true
+
+[node name="Open" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundTint" type="ColorRect" parent="Open"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 100.0
+grow_horizontal = 2
+color = Color(0.25098, 0.25098, 0.25098, 0.705882)
+
+[node name="LeftGrid" type="HBoxContainer" parent="Open/BackgroundTint"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="SettingsButton" type="TextureButton" parent="Open/BackgroundTint/LeftGrid"]
+layout_mode = 2
+tooltip_text = "Options"
+texture_normal = ExtResource("1_gvra1")
+
+[node name="RightGrid" type="HBoxContainer" parent="Open/BackgroundTint"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -204.0
+offset_top = -50.0
+offset_bottom = 50.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="RestartButton" type="TextureButton" parent="Open/BackgroundTint/RightGrid"]
+layout_mode = 2
+tooltip_text = "Options"
+texture_normal = ExtResource("3_2rvlw")
+
+[node name="LeftButton" type="TextureButton" parent="Open/BackgroundTint/RightGrid"]
+layout_mode = 2
+tooltip_text = "Options"
+texture_normal = ExtResource("4_q8cus")
+texture_disabled = ExtResource("4_q8cus")
+
+[node name="RightButton" type="TextureButton" parent="Open/BackgroundTint/RightGrid"]
+layout_mode = 2
+tooltip_text = "Options"
+texture_normal = ExtResource("5_7ljyn")
+texture_disabled = ExtResource("5_7ljyn")
+
+[node name="AudioOnButton" type="TextureButton" parent="Open/BackgroundTint/RightGrid"]
+layout_mode = 2
+tooltip_text = "Options"
+texture_normal = ExtResource("6_yhrvr")
+
+[node name="AudioOffButton" type="TextureButton" parent="Open/BackgroundTint/RightGrid"]
+visible = false
+layout_mode = 2
+tooltip_text = "Options"
+texture_normal = ExtResource("7_7vpjg")
+
+[node name="MusicOffButton" type="TextureButton" parent="Open/BackgroundTint/RightGrid"]
+visible = false
+layout_mode = 2
+tooltip_text = "Options"
+texture_normal = ExtResource("8_28fv2")
+
+[node name="MusicOnButton" type="TextureButton" parent="Open/BackgroundTint/RightGrid"]
+layout_mode = 2
+tooltip_text = "Options"
+texture_normal = ExtResource("9_0cvjj")
+
+[node name="LargerButton" type="TextureButton" parent="Open/BackgroundTint/RightGrid"]
+layout_mode = 2
+tooltip_text = "Options"
+texture_normal = ExtResource("10_pifpx")
+
+[node name="SmallerButton" type="TextureButton" parent="Open/BackgroundTint/RightGrid"]
+visible = false
+layout_mode = 2
+tooltip_text = "Options"
+texture_normal = ExtResource("11_sgg41")
+
+[node name="ExitButton" type="TextureButton" parent="Open/BackgroundTint/RightGrid"]
+layout_mode = 2
+tooltip_text = "Options"
+texture_normal = ExtResource("12_mxoal")
+
+[node name="Closed" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ClosedGrid" type="HBoxContainer" parent="Closed"]
+layout_mode = 1
+offset_right = 100.0
+offset_bottom = 100.0
+
+[node name="ClosedSettingsButton" type="TextureButton" parent="Closed/ClosedGrid"]
+layout_mode = 2
+tooltip_text = "Options"
+mouse_filter = 1
+texture_normal = ExtResource("1_gvra1")
+
+[node name="Footer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Footer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="FooterRestartButton" type="TextureButton" parent="Footer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Options"
+mouse_filter = 1
+texture_normal = ExtResource("3_2rvlw")
+
+[node name="BoardNameLabel" type="Label" parent="Footer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = -3
+theme_override_fonts/font = ExtResource("14_h5i6g")
+theme_override_font_sizes/font_size = 40
+text = "Baby Steps"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="Open/BackgroundTint/LeftGrid/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Open/BackgroundTint/RightGrid/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Open/BackgroundTint/RightGrid/LeftButton" to="." method="_on_left_button_pressed"]
+[connection signal="pressed" from="Open/BackgroundTint/RightGrid/RightButton" to="." method="_on_right_button_pressed"]
+[connection signal="pressed" from="Open/BackgroundTint/RightGrid/AudioOnButton" to="." method="_on_audio_on_button_pressed"]
+[connection signal="pressed" from="Open/BackgroundTint/RightGrid/AudioOffButton" to="." method="_on_audio_off_button_pressed"]
+[connection signal="pressed" from="Open/BackgroundTint/RightGrid/MusicOffButton" to="." method="_on_music_off_button_pressed"]
+[connection signal="pressed" from="Open/BackgroundTint/RightGrid/MusicOnButton" to="." method="_on_music_on_button_pressed"]
+[connection signal="pressed" from="Open/BackgroundTint/RightGrid/LargerButton" to="." method="_on_larger_button_pressed"]
+[connection signal="pressed" from="Open/BackgroundTint/RightGrid/SmallerButton" to="." method="_on_smaller_button_pressed"]
+[connection signal="pressed" from="Open/BackgroundTint/RightGrid/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Closed/ClosedGrid/ClosedSettingsButton" to="." method="_on_closed_settings_button_pressed"]
+[connection signal="pressed" from="Footer/VBoxContainer/FooterRestartButton" to="." method="_on_restart_button_pressed"]

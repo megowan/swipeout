@@ -1,0 +1,127 @@
+[gd_scene load_steps=22 format=3 uid="uid://dntwurjt3npih"]
+
+[ext_resource type="Script" path="res://scripts/swipeout.gd" id="1_ng6ea"]
+[ext_resource type="Script" path="res://scripts/state_machine/gamestate/game_state_machine.gd" id="8_eo3mt"]
+[ext_resource type="PackedScene" uid="uid://c8bl7g0eny4i1" path="res://scenes/popup.tscn" id="8_lbosm"]
+[ext_resource type="Script" path="res://scripts/state_machine/gamestate/initializing_gamestate.gd" id="9_sum6u"]
+[ext_resource type="AudioStream" uid="uid://hx687fs338xr" path="res://audio/ball/slyderdeath.ogg" id="10_3n6eq"]
+[ext_resource type="Script" path="res://scripts/state_machine/gamestate/level_select_gamestate.gd" id="11_cvln8"]
+[ext_resource type="Script" path="res://scripts/state_machine/gamestate/load_map_gamestate.gd" id="12_ussch"]
+[ext_resource type="Script" path="res://scripts/state_machine/gamestate/waiting_gamestate.gd" id="13_6jqe2"]
+[ext_resource type="Script" path="res://scripts/state_machine/gamestate/moving_gamestate.gd" id="14_bmm3g"]
+[ext_resource type="AudioStream" uid="uid://chfm8eu0o7ek4" path="res://audio/finishinglevel.ogg" id="14_xsy4d"]
+[ext_resource type="Script" path="res://scripts/profile_handler.gd" id="15_83yy7"]
+[ext_resource type="Script" path="res://scripts/state_machine/gamestate/failed_gamestate.gd" id="15_m8nni"]
+[ext_resource type="Script" path="res://scripts/music.gd" id="16_7xlex"]
+[ext_resource type="AudioStream" uid="uid://c6u4ts2ou1tp" path="res://audio/music/track1.ogg" id="16_fk001"]
+[ext_resource type="Script" path="res://scripts/state_machine/gamestate/finished_board_gamestate.gd" id="16_hac7q"]
+[ext_resource type="AudioStream" uid="uid://w1l60qcwy62x" path="res://audio/music/track2.ogg" id="17_axgcs"]
+[ext_resource type="Script" path="res://scripts/state_machine/gamestate/exiting_gamestate.gd" id="17_qu2vr"]
+[ext_resource type="Script" path="res://scripts/board/board_collection.gd" id="18_ti5ht"]
+[ext_resource type="AudioStream" uid="uid://7j5n00wr3pep" path="res://audio/music/track3.ogg" id="18_v2qxa"]
+[ext_resource type="Script" path="res://scripts/board/board_controller.gd" id="19_31utn"]
+[ext_resource type="AudioStream" uid="uid://xo5vx6eoxxjv" path="res://audio/music/track4.ogg" id="19_opjcy"]
+
+[node name="Swipeout" type="Node2D"]
+script = ExtResource("1_ng6ea")
+
+[node name="UI Layer" type="CanvasLayer" parent="."]
+
+[node name="Popup" parent="UI Layer" instance=ExtResource("8_lbosm")]
+
+[node name="GameState" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("8_eo3mt")
+starting_state = NodePath("Initializing")
+
+[node name="Initializing" type="Node" parent="GameState" node_paths=PackedStringArray("board_collection", "board_controller", "load_map_state", "profile_handler")]
+script = ExtResource("9_sum6u")
+board_collection = NodePath("../../BoardCollection")
+board_controller = NodePath("../../BoardController")
+load_map_state = NodePath("../LoadMap")
+profile_handler = NodePath("../../PlayerProfileHandler")
+
+[node name="LevelSelect" type="Node" parent="GameState"]
+script = ExtResource("11_cvln8")
+
+[node name="LoadMap" type="Node" parent="GameState" node_paths=PackedStringArray("waiting_game_state")]
+script = ExtResource("12_ussch")
+waiting_game_state = NodePath("../Waiting")
+
+[node name="Waiting" type="Node" parent="GameState" node_paths=PackedStringArray("load_map_state", "moving_state")]
+script = ExtResource("13_6jqe2")
+load_map_state = NodePath("../LoadMap")
+moving_state = NodePath("../Moving")
+
+[node name="Moving" type="Node" parent="GameState" node_paths=PackedStringArray("waiting_game_state", "failed_game_state", "finished_game_state", "loadmap_game_state")]
+script = ExtResource("14_bmm3g")
+waiting_game_state = NodePath("../Waiting")
+failed_game_state = NodePath("../Failed")
+finished_game_state = NodePath("../FinishedBoard")
+loadmap_game_state = NodePath("../LoadMap")
+
+[node name="Failed" type="Node" parent="GameState" node_paths=PackedStringArray("load_map_state")]
+script = ExtResource("15_m8nni")
+load_map_state = NodePath("../LoadMap")
+
+[node name="audio_failed" type="AudioStreamPlayer2D" parent="GameState/Failed"]
+stream = ExtResource("10_3n6eq")
+bus = &"SFX"
+
+[node name="FinishedBoard" type="Node" parent="GameState" node_paths=PackedStringArray("load_map_state")]
+script = ExtResource("16_hac7q")
+load_map_state = NodePath("../LoadMap")
+
+[node name="Exiting" type="Node" parent="GameState"]
+script = ExtResource("17_qu2vr")
+
+[node name="BoardCollection" type="Node" parent="."]
+script = ExtResource("18_ti5ht")
+
+[node name="BoardController" type="Node2D" parent="." node_paths=PackedStringArray("board_collection")]
+script = ExtResource("19_31utn")
+board_collection = NodePath("../BoardCollection")
+
+[node name="audio_finishing_level" type="AudioStreamPlayer2D" parent="BoardController"]
+stream = ExtResource("14_xsy4d")
+
+[node name="PlayerProfileHandler" type="Node" parent="." node_paths=PackedStringArray("swipeout")]
+script = ExtResource("15_83yy7")
+swipeout = NodePath("..")
+
+[node name="Music" type="Node" parent="."]
+script = ExtResource("16_7xlex")
+
+[node name="track1" type="AudioStreamPlayer2D" parent="Music"]
+stream = ExtResource("16_fk001")
+bus = &"Music"
+
+[node name="track2" type="AudioStreamPlayer2D" parent="Music"]
+stream = ExtResource("17_axgcs")
+bus = &"Music"
+
+[node name="track3" type="AudioStreamPlayer2D" parent="Music"]
+stream = ExtResource("18_v2qxa")
+bus = &"Music"
+
+[node name="track4" type="AudioStreamPlayer2D" parent="Music"]
+stream = ExtResource("19_opjcy")
+bus = &"Music"
+
+[connection signal="requested_next_board" from="UI Layer/Popup" to="BoardController" method="_on_requested_next_board"]
+[connection signal="requested_previous_board" from="UI Layer/Popup" to="BoardController" method="_on_requested_previous_board"]
+[connection signal="requested_restart_board" from="UI Layer/Popup" to="BoardController" method="_on_requested_restart_board"]
+[connection signal="started_the_game" from="GameState/Initializing" to="Music" method="_on_started_the_game"]
+[connection signal="swipe_triggered" from="GameState/Waiting" to="BoardController" method="_on_swipe_triggered"]
+[connection signal="advanced_to_next_board" from="GameState/FinishedBoard" to="Music" method="_on_advanced_to_next_board"]
+[connection signal="board_complete" from="BoardController" to="GameState/Moving" method="_on_board_complete"]
+[connection signal="board_failed" from="BoardController" to="UI Layer/Popup" method="_on_board_failed"]
+[connection signal="board_failed" from="BoardController" to="GameState/Moving" method="_on_board_failed"]
+[connection signal="controller_changed_board" from="BoardController" to="UI Layer/Popup" method="_on_controller_changed_board"]
+[connection signal="finished_board_transition" from="BoardController" to="GameState/LoadMap" method="_on_board_controller_finished_board_transition"]
+[connection signal="moving_began" from="BoardController" to="GameState/Waiting" method="_on_moving_began"]
+[connection signal="moving_finished" from="BoardController" to="GameState/Moving" method="_on_moving_finished"]
+[connection signal="player_started_board" from="BoardController" to="PlayerProfileHandler" method="_on_player_started_board"]
+[connection signal="started_board_transition" from="BoardController" to="UI Layer/Popup" method="_on_started_board_transition"]
+[connection signal="started_board_transition" from="BoardController" to="GameState/Waiting" method="_on_started_board_transition"]
+[connection signal="started_board_transition" from="BoardController" to="GameState/Moving" method="_on_started_board_transition"]
+[connection signal="started_board_transition" from="BoardController" to="GameState/Failed" method="_on_started_board_transition"]

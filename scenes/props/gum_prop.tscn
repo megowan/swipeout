@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqqkales4r2ye"]
+
+[ext_resource type="Texture2D" uid="uid://dshiv3wg734bp" path="res://art/tileset/gum.png" id="1_mlmj8"]
+[ext_resource type="Script" path="res://scripts/props/gum_prop.gd" id="2_6c8s8"]
+[ext_resource type="AudioStream" uid="uid://bicwyc5fwgrhx" path="res://audio/gumstuck.ogg" id="3_ypjbi"]
+
+[node name="gum_prop" type="Sprite2D"]
+z_index = 2
+texture = ExtResource("1_mlmj8")
+offset = Vector2(20, 20)
+hframes = 2
+script = ExtResource("2_6c8s8")
+
+[node name="audio_gum_stuck" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_ypjbi")

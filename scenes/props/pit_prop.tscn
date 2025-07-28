@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cq6qq6cuuimqb"]
+
+[ext_resource type="Script" path="res://scripts/props/pit_prop.gd" id="1_yel5w"]
+[ext_resource type="AudioStream" uid="uid://5dqljxbyvxrk" path="res://audio/fall.ogg" id="2_3fj5l"]
+
+[node name="pit_prop" type="Sprite2D"]
+z_index = 2
+script = ExtResource("1_yel5w")
+
+[node name="audio_pit_fall" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_3fj5l")

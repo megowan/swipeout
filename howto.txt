@@ -1,0 +1,63 @@
+How to make a skin
+------------------
+Tilemap Tileset needs three layers. shadow, floor, and walls. z indexes are 1, 2, and 3 respectively. The background will be layer 0
+For the walls, setup custom metadata of "wall_data" of value type string. strings are the letters "udlr" corresponding to which wall segments are part of the sprite
+Order is important
+Remove unused tiles from the tilemap. I name the atlases "FloorShadows", "Walls" and "Floors" and their IDs are 0, 1, and 2.
+For the "Walls" tileset, also set the texture offset to (20,20) on all of the tiles. That will nudge the tiles into the top-left corner of the tile, to sit on top of the intersection
+For the floor tiles, set the offset to (-12,-12) and edit the modulation color to have an alpha of 100
+
+Remember when making a new character
+------------------------------------
+* Object needs to be pickable
+* hook up animationtree signal
+* hook up input signal
+
+Escape
+------
+* When an inhabitant enters a cell, if there's a prop, tell the prop that it got touched by the new inhabitant
+* goal gets touched_by(inhabitant)
+* if the goal is inactive, do nothing
+* inhabitant gets touched_prop(prop)
+inhabitant moving state has a reference to the escape state
+[ ] Don't even go to BUMP or keep moving. touches only happen during MOVING
+
+Board MVC
+---------
+BoardModel is the string representation
+BoardController requests a boardmodel from the boardcollection by index
+BoardController builds a board
+  instantiates a board tuple
+	attaches the boardModel
+	instantiates the theme from the resource
+	instantiates the gameboard (logical)
+	attaches the visual (theme) as a  child to the controller
+  Reads through the ascii art of the layout
+  Builds up the walls, floors, props and inhabitants on the visual and logical
+ 
+BoardTuple holds the BoardModel, the GameBoard, and the BoardView
+
+Collisions
+----------
+Checking the next cell while moving
+  if it's not empty, get the inhabitant
+  tell the inhabitant that they were hitby(self, dir)
+  switch to bump
+
+Inhabitants had a HitBy(inhabitant, direction)
+  Enemyl had to be in 'after' or in the bump state
+  If sparky hit enemy, then you triggered your zap death and sparky's shockdeath
+  If the thing that bumped the enemy was ball, then trigger ball's bumpdeath
+
+Ball's hitby
+  looked at the type. If it was ball, neutral, hroller, vroller, then do nothing
+  If it was bomb, then zapdeath
+  Otherwise, switch to bumpdeath
+
+Ball had a bumpdeath state
+
+zapdeath
+  everyone has a spark sprite, set to sparks_idle
+  When sparky kills you, the sprite is made visible and plays
+  Bomb makes the sound.
+

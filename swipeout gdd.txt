@@ -1,0 +1,99 @@
+
+https://youtu.be/RoKj-dj2yms?si=VXQTnKh1Y2RY7LwW&t=58
+
+=============================================
+TODO
+=============================================
+[ ] Make the bomb asset a part of the tilemap
+
+Exit activated: https://freesound.org/people/Romeo_Kaleikau/sounds/588251/
+
+=============================================
+LEVEL DESIGN
+=============================================
+[ ] Level showing that goal does not have to be against a wall
+[ ] level showing only ball exits. Neutral and enemy do not
+[ ] level showing that neutral can hinder your ability to get to a goal
+[ ] Board full of gum where ball is surrounded by enemies at all times
+
+
+=============================================
+BUGS
+=============================================
+[ ] BUG can't click anywhere when the popup menu is visible
+
+=============================================
+POLISH
+=============================================
+https://gut.readthedocs.io/en/latest/Creating-Tests.html
+[ ] Rock should acknowledge being bumped. It'll be in the 'after' state. 
+[ ] Profile handler can emit the profile as signals that popup and controller can receive
+[ ] game state uses signals?
+[ ] copy https://clickmazes.com/newtilt/new-ixtilt2d.htm
+[ ] Consider win condition when all waypoints are flipped and there's no goal
+
+
+=============================================
+CLEANUP (warmup work)
+=============================================
+[ ] Have everything that talks to visual or logical talk to the tuple instead
+
+
+
+=============================================
+PONDER
+=============================================
+[ ] Can I break inhabitant.gd logic into components
+[ ] Can I change Inhabitant from CharacterBody2d to something simpler?
+[ ] can I simplify and dedupe the logic in move state?
+  [ ] Maybe respond to signals?
+[ ] Can the bomb have a child that it animates? doubtful
+[ ] Look into sparks doing their animations with bomb
+  [ ] child
+  [ ] Figure out how to give the spark instructions when it's the child of an inhabitant
+[ ] Replace logical board reference in waypoint with signal
+  [ ] Problem is that logical still needs to know that it's adding a waypoint in order to know to connect a signal handler
+  [ ] Can still make a waypoint emit when it's deactivated
+  [ ] Can maybe make goals listen to how many waypoints the logical says are active, or let every goal count on its own
+
+=============================================
+POST BETA
+=============================================
+[ ] https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html
+
+UNDO
+Editor
+Level selection with thumbnails?
+Write maps from Gameboard
+Think about storing custom levels. How does Escape simulator do it?
+Unimplemented Entities:
+* Key
+* Disappearing wall
+* Auto-tilt
+* Wraparound (teleport)
+* Opposite entity
+* Electric Reginald
+
+	var modetext = "Mode: "
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		modetext += "Fullscreen\n"
+	else:
+		modetext += "Windowed\n"
+	if DisplayServer.window_get_flag(DisplayServer.WINDOW_FLAG_RESIZE_DISABLED):
+		modetext += "Fixed Size\n"
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_MINIMIZED:
+		modetext += "Minimized\n"
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_MAXIMIZED:
+		modetext += "Maximized\n"
+
+ func _on_Button_Fullscreen_pressed():
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+func _on_Button_Maximized_pressed():
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_MAXIMIZED:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
